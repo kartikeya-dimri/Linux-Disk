@@ -51,4 +51,7 @@ echo run_after | python3 disk_features_full.py
 
 echo -e "run_before\nrun_after" | python3 disk_plots.py
 
+# Statistical Significance (Intra-run)
+python3 disk_stats.py intra run_before run_after
+
 echo "DONE"
