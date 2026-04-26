@@ -1,34 +1,65 @@
 #!/bin/bash
 
 WORKLOAD=$1
-OUTDIR="run_after"
+FILE="testfile"
+SIZE="4G"
+RUNTIME=90
 
-if [ -z "$WORKLOAD" ]; then
-    echo "Usage: $0 {rand|seq|mix}"
-    exit 1
+echo "[+] Running workload: $WORKLOAD"
+
+if [ ! -f "$FILE" ]; then
+    echo "[+] Creating large test file..."
+    dd if=/dev/zero of=$FILE bs=1M count=4096 status=progress
 fi
 
-echo "=================================="
-echo " TUNED RUN"
-echo "=================================="
+case $WORKLOAD in
+    seq)
+        fio --name=seq_read \
+            --filename=$FILE \
+            --size=$SIZE \
+            --bs=1M \
+            --rw=read \
+            --iodepth=64 \
+            --numjobs=2 \
+            --ioengine=libaio \
+            --runtime=$RUNTIME \
+            --time_based \
+            --direct=1
+        ;;
 
-./reset_system.sh
+    rand)
+        fio --name=rand_read \
+            --filename=$FILE \
+            --size=$SIZE \
+            --bs=4k \
+            --rw=randread \
+            --iodepth=64 \
+            --numjobs=4 \
+            --ioengine=libaio \
+            --runtime=$RUNTIME \
+            --time_based \
+            --direct=1
+        ;;
 
-echo "[+] Generating tuning recommendation..."
+    mix)
+        fio --name=rand_mix \
+            --filename=$FILE \
+            --size=$SIZE \
+            --bs=4k \
+            --rw=randrw \
+            --rwmixread=70 \
+            --iodepth=64 \
+            --numjobs=4 \
+            --ioengine=libaio \
+            --runtime=$RUNTIME \
+            --time_based \
+            --direct=1
+        ;;
 
-echo -e "sda\nrun_before/disk_features_full.json" | python3 disk_tuning.py
+    *)
+        echo "Usage: $0 {seq|rand|mix}"
+        exit 1
+        ;;
+esac
 
-echo ""
-echo ">>> Apply the above tuning manually, then press ENTER"
-read
-
-echo "[+] Running tuned experiment..."
-
-./run_monitoring.sh $WORKLOAD $OUTDIR
-
-echo "[+] Extracting features..."
-echo $OUTDIR | python3 disk_features_full.py
-
-echo "=================================="
-echo " Tuned run completed: $OUTDIR"
-echo "=================================="
+echo "[+] Workload completed."
