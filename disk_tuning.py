@@ -15,9 +15,12 @@ reasons = []
 
 queue = features.get("avg_queue", 0)
 req_size = features.get("avg_req_size", 0)
+write_ratio = features.get("write_ratio", 0)
 
 # Workload detection
-if req_size > 128:
+if write_ratio > 0.15:
+    workload = "mixed"
+elif req_size > 128:
     workload = "sequential"
 elif req_size < 32:
     workload = "random"
@@ -39,6 +42,8 @@ commands.append(f"echo {scheduler} | sudo tee /sys/block/{DEVICE}/queue/schedule
 # Read-ahead
 if workload == "sequential":
     readahead = 1024
+elif workload == "mixed":
+    readahead = 512
 else:
     readahead = 128
 

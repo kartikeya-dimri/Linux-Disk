@@ -12,9 +12,17 @@ echo "===== BASELINE RUN ====="
 
 ./reset_system.sh
 
-# BAD baseline
+# BAD baseline (deliberately wrong config per workload)
 echo none | sudo tee /sys/block/$DEVICE/queue/scheduler > /dev/null
-sudo blockdev --setra 128 /dev/$DEVICE
+if [ "$WORKLOAD" == "rand" ]; then
+    sudo blockdev --setra 1024 /dev/$DEVICE
+elif [ "$WORKLOAD" == "seq" ]; then
+    sudo blockdev --setra 32 /dev/$DEVICE
+elif [ "$WORKLOAD" == "mix" ]; then
+    sudo blockdev --setra 4096 /dev/$DEVICE
+else
+    sudo blockdev --setra 128 /dev/$DEVICE
+fi
 
 ./run_monitoring.sh $WORKLOAD run_before
 
