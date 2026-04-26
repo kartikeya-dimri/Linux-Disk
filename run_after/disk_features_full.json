@@ -1,14 +1,14 @@
 {
-    "avg_await": 151.93283333333332,
-    "avg_queue": 230.2253333333333,
-    "avg_util": 89.12788888888889,
-    "avg_iops": 2118.727888888889,
-    "avg_throughput_kBps": 8683.292444444443,
-    "avg_iowait": 18.647727272727273,
-    "avg_req_size": 5.036777777777778,
-    "write_ratio": 0.0022627397235656186,
+    "avg_await": 279.3426804123711,
+    "avg_queue": 232.16432989690725,
+    "avg_util": 91.80577319587628,
+    "avg_iops": 1433.3715463917524,
+    "avg_throughput_kBps": 6102.301030927836,
+    "avg_iowait": 20.927083333333332,
+    "avg_req_size": 6.485154639175257,
+    "write_ratio": 0.2892863076387813,
     "top_io_process": "node",
-    "top_io_kB": 2624398021.06,
-    "psi_some_avg10": 46.29563636363636,
-    "disk_pressure_score": 108.79463939393938
+    "top_io_kB": 2828952976.0,
+    "psi_some_avg10": 32.35515789473684,
+    "disk_pressure_score": 107.8474791734491
 }
