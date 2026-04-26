@@ -1,0 +1,14 @@
+{
+    "avg_await": 45.58041666666667,
+    "avg_queue": 215.06416666666667,
+    "avg_util": 87.29783333333333,
+    "avg_iops": 2374.630166666667,
+    "avg_throughput_kBps": 9833.130666666666,
+    "avg_iowait": 29.466666666666665,
+    "avg_req_size": 7.780833333333333,
+    "write_ratio": 0.004426389559864183,
+    "top_io_process": "node",
+    "top_io_kB": 3478409132.0,
+    "psi_some_avg10": 39.218333333333334,
+    "disk_pressure_score": 104.44559999999998
+}
