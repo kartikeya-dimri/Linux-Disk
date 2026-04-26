@@ -38,9 +38,6 @@ echo "===== TUNING ====="
 
 echo -e "$DEVICE\nrun_before/disk_features_full.json" | python3 disk_tuning.py
 
-echo "Apply tuning manually and press ENTER"
-read
-
 echo "===== TUNED RUN ====="
 
 ./reset_system.sh

@@ -49,6 +49,10 @@ else:
 
 commands.append(f"sudo blockdev --setra {readahead} /dev/{DEVICE}")
 
-print("\nCommands:")
+import os
+print("\nApplying Commands Automatically:")
 for cmd in commands:
     print(cmd)
+    if "tee" in cmd and "> /dev/null" not in cmd:
+        cmd += " > /dev/null"
+    os.system(cmd)

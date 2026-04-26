@@ -44,10 +44,6 @@ for i in $(seq 1 $ITERATIONS); do
         echo ""
         echo "===== TUNING ====="
         echo -e "$DEVICE\nrun_before_1/disk_features_full.json" | python3 disk_tuning.py
-        
-        echo ""
-        echo "Apply tuning manually and press ENTER to continue with the tuned runs"
-        read
     else
         echo ""
         echo "===== TUNING ====="
